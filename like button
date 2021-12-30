@@ -1,0 +1,31 @@
+const [likes,setLikes] = useState(0);
+const [liked,setLiked] = useState(false);
+
+
+const eventInfo = ()=>{
+    const getInfo = firebase.database().ref('/users/event/' +postKey)
+    getInfo.on('value', snapshot => {
+        console.log('User data: ', snapshot.val())
+        setLikes(snapshot.val().likes)
+       // setIntersted(snapshot.val().interested)
+       // setInterestedNmb(snapshot.val().interestedNmb)
+       // setInterestedName(snapshot.val().interestedName)
+        setLiked(snapshot.val().liked)
+      });
+}
+
+const like = () => {
+    const updateLike = firebase.database().ref('/users/event/' +postKey)
+    updateLike.update({
+        likes: likes +1 ,
+        liked: true
+    })
+  };
+
+  const dislike = () => {
+    const updateLike = firebase.database().ref('/users/event/' +postKey)
+    updateLike.update({
+        likes: likes -1 ,
+        liked: false
+    })
+  };
